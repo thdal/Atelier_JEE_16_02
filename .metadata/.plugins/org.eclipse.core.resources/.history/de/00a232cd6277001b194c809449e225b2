@@ -1,0 +1,14 @@
+package fr.epsi.dao;
+
+import java.util.List;
+
+import fr.epsi.entite.Idee;
+
+public interface IdeeDao {
+    void create(Idee i); 
+    
+   List<Idee> getIdeesList();
+   
+   void setVote(Long id, int vote);
+
+}

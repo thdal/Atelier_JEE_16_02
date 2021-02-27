@@ -1,0 +1,179 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ 
+ 
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Liste des idees</title>
+</head>
+<body>
+<div class="container">
+<%@include file="../commons/MenuNavBar.jsp" %>
+<h1>Liste des idees</h1>
+<hr> 
+<table class="centered">
+   <thead>
+       <tr>
+           <th>Numero</th>       
+           <th>Categorie</th>
+           <th>Description</th>
+           <th>Url de l'image</th>
+           <th>Vote</th>
+           <th>Commentaire</th>
+           
+       </tr>
+   </thead>
+   <tbody>   
+    <c:forEach items="${IdeesList}" var="i" varStatus="loop">   
+	    <tr>
+	    	<td><c:out value="${loop.index + 1}"/>
+	        <td><c:out value="${i.categorie}"/></td>
+	        <td><c:out value="${i.description}"/></td>        
+	        <td><img style="max-width: 150px; max-height:150px" src="${i.image}"/></td>
+	        <td>
+	        
+	       
+	        <!-- Ici débute notre grousse boucle d'affichage des votes  -->
+	        <c:if test="${empty i.vote }">
+										<c:choose>
+											<!-- On fait nos comparaisons de date de cette manière tout le long du switch -->	
+										    <c:when test="${i.user.id eq sessionScope.SessionID || dateIdee.time  > dateIdee.time + 86400000 * 7 }">
+										       <form style="display:inline;" action="idees?action=vote" method="post">
+									        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+													<input type="hidden" name="vote" value="1"/>					
+													<button style="cursor:pointer" class="btn waves-effect waves-light disabled" type="submit" name="action">Top
+													    <i class="material-icons right">thumb_up</i>
+													 </button>				
+												</form>	
+												<form style="display:inline;" action="idees?action=vote" method="post">
+									        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+													<input type="hidden" name="vote" value="2"/>					
+													<button style="cursor:pointer" class="btn waves-effect waves-light disabled" type="submit" name="action">Flop
+													    <i class="material-icons right">thumb_down</i>
+													</button>				
+												</form>	
+										    </c:when>    
+										    <c:otherwise>
+										        <form style="display:inline;" action="idees?action=vote" method="post">
+									        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+													<input type="hidden" name="vote" value="1"/>					
+													<button style="cursor:pointer" class="btn waves-effect waves-light blue" type="submit" name="action">Top
+													    <i class="material-icons right">thumb_up</i>
+													 </button>				
+												</form>	
+												<form style="display:inline;" action="idees?action=vote" method="post">
+									        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+													<input type="hidden" name="vote" value="2"/>					
+													<button style="cursor:pointer" class="btn waves-effect waves-light blue" type="submit" name="action">Flop
+													    <i class="material-icons right">thumb_down</i>
+													</button>				
+												</form>	
+										    </c:otherwise>
+										</c:choose>	
+									</c:if>		    
+									<c:if test="${!empty i.vote }">
+											<c:forEach items="${i.vote}" var="v" varStatus="loop"> 
+													  <c:if test="${v.idee.id == i.id || dateIdee.time > future.time }">
+														<% Object objSessionId = session.getAttribute("SessionID"); %>
+														<%long sessionId =  Long.parseLong( String.valueOf(objSessionId));%>									           
+															<c:if test="${v.user.id eq sessionScope.SessionID}">
+																<c:set var="found" value="1" />
+																<c:choose>
+																    <c:when test="${v.labelVote == 1 }">
+																        <button style="cursor:pointer" class="btn waves-effect waves-light blue disabled" type="submit" name="action">Top
+																	    <i class="material-icons right">thumb_up</i>
+																	 </button>
+																    </c:when>    
+																    <c:otherwise>
+																        <button style="cursor:pointer" class="btn waves-effect waves-light blue disabled" type="submit" name="action">Flop
+																		    <i class="material-icons right">thumb_down</i>
+																		</button>
+																    </c:otherwise>
+																</c:choose>
+															</c:if>
+														</c:if>
+											 </c:forEach>
+											<c:if test="${found ne 1}">
+												<c:choose>
+													    <c:when test="${i.user.id eq sessionScope.SessionID || dateIdee.time > future.time }">
+													       <form style="display:inline;" action="idees?action=vote" method="post">
+												        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+																<input type="hidden" name="vote" value="1"/>					
+																<button style="cursor:pointer" class="btn waves-effect waves-light disabled" type="submit" name="action">Top
+																    <i class="material-icons right">thumb_up</i>
+																 </button>				
+															</form>	
+															<form style="display:inline;" action="idees?action=vote" method="post">
+												        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+																<input type="hidden" name="vote" value="2"/>					
+																<button style="cursor:pointer" class="btn waves-effect waves-light disabled" type="submit" name="action">Flop
+																    <i class="material-icons right">thumb_down</i>
+																</button>				
+															</form>	
+													    </c:when>    
+													    <c:otherwise>  
+													        <form style="display:inline;" action="idees?action=vote" method="post">
+												        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+																<input type="hidden" name="vote" value="1"/>					
+																<button style="cursor:pointer" class="btn waves-effect waves-light blue" type="submit" name="action">Top
+																    <i class="material-icons right">thumb_up</i>
+																 </button>				
+															</form>	
+															<form style="display:inline;" action="idees?action=vote" method="post">
+												        		<input type="hidden" name="ideeId" value="${i.id}"/>				
+																<input type="hidden" name="vote" value="2"/>					
+																<button style="cursor:pointer" class="btn waves-effect waves-light blue" type="submit" name="action">Flop
+																    <i class="material-icons right">thumb_down</i>
+																</button>				
+															</form>	
+													    </c:otherwise>
+												</c:choose>	
+											</c:if>
+										</c:if>
+										<c:set var="found" value="0" />
+	      
+			  
+			 
+	        
+
+	        
+	       
+						
+					</td><!-- Fin boucle votes  -->  
+		       <td>
+		       <form action="idees?action=comment" method="post">
+		       		<div style="display:inline;" class="input-field">
+						<div  class="input-field">
+				          <textarea style="margin:0;" name="comment" id="textarea1" class="materialize-textarea"></textarea>
+				          <label for="textarea1">Commentaire</label>
+				          </div>
+				          <div style="display:inline;">
+				  			<input type="hidden" name="ideeId" value="${i.id}"/>
+				  			<button style="cursor:pointer" class="btn waves-effect waves-light orange" type="submit" name="action"><i class="material-icons center">done</i></button>
+				  	  	</div> 
+			         </div>			          
+			  
+				  		
+			  	  </form>    
+			  </td>
+		</tr>
+	</c:forEach>	    
+    </tbody>
+ </table>
+ 
+<a style="margin-top:25px" class="waves-effect waves-light btn blue " href="idees?action=create">Ajouter une idée</a>
+
+</div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+});
+</script>
+</html>

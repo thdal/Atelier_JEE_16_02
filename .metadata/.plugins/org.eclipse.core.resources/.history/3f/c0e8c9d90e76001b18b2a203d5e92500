@@ -1,0 +1,73 @@
+package fr.epsi.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
+import fr.epsi.dao.UserDao;
+import fr.epsi.dao.UserDaoImpl;
+import fr.epsi.entite.User;
+
+
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class UserServiceImpl implements UserService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Resource
+    private UserTransaction utx;
+	
+	public void createUser(User c) {		
+		UserDao dao=new UserDaoImpl(em, utx);
+		dao.create(c);		
+	}
+	
+	public List<User> getUsersList() {
+		UserDao dao=new UserDaoImpl(em, utx);		
+		return dao.getUsersList();		
+	}
+
+	public Boolean getUserExist(String mail, String password) {
+		System.out.println("GETUSEREXISTSERVICE");
+
+		UserDao dao=new UserDaoImpl(em, utx);	
+		List<User> test1 = dao.getUsersList();
+		List<User> test = dao.getUserExist(mail, password);
+		
+		System.out.println("GETUSEREXISAPRRES");
+		System.out.println(test);
+		
+		if(test1 == null) {
+			return false;
+		}
+
+		for(User u : test1) {
+			System.out.println(u.getPassword());
+			System.out.println(u.getMail());
+
+		}
+		System.out.println("TESTUSERLISTOK");
+
+
+		if(test == null) {
+			return false;
+		}
+
+		for(User u : test) {
+			System.out.println(u.getPassword());
+			System.out.println(u.getMail());
+
+		}
+		
+		return true;
+	}
+
+}

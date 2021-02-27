@@ -1,0 +1,7 @@
+package fr.epsi.dao;
+
+import fr.epsi.entite.UserRole;
+
+public interface UserRoleDao {
+    void create(UserRole ur); 
+}

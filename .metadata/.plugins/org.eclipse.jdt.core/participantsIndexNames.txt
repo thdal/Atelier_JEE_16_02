@@ -1,0 +1,21 @@
+INDEX VERSION 1.131
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\947591360.index
+\Atelier_JEE_16_02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\602246490.index
+\Atelier-JEE-16-02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\8508141.index
+\Atelier-JEE-16-02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2150365316.index
+\Atelier_JEE_16_02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2436329589.index
+\Atelier-JEE-16-02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1274379655.index
+\Atelier_JEE_16_02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2152887971.index
+\Atelier_JEE_16_02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2671363538.index
+\Atelier_JEE_16_02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2704088702.index
+\Atelier_JEE_16_02\src\main\java
+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3674914697.index
+\Atelier_JEE_16_02\src\main\java

@@ -1,0 +1,11 @@
+package fr.epsi.dao;
+
+import fr.epsi.entite.Vote;
+
+	
+public interface NoteDao {
+    void create(Vote n); 
+    
+}
+
+

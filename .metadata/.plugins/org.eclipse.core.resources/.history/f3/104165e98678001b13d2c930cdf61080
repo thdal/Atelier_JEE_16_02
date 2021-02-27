@@ -1,0 +1,8 @@
+package fr.epsi.service;
+
+
+public interface ClassementService {
+	
+	List<Idee> getClassementTops();
+	
+}

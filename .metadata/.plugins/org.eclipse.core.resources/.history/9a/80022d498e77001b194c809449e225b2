@@ -1,0 +1,31 @@
+package fr.epsi.service;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
+import fr.epsi.dao.VoteDao;
+import fr.epsi.dao.VoteDaoImpl;
+import fr.epsi.entite.Vote;
+
+
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class VoteServiceImpl implements VoteService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Resource
+    private UserTransaction utx;
+	
+	public void createVote(Vote v) {		
+		VoteDao dao=new VoteDaoImpl(em, utx);
+		dao.create(n);		
+	}
+
+}

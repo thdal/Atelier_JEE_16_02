@@ -1,0 +1,8 @@
+package fr.epsi.service;
+
+
+public interface ClassementService {
+	
+	void getClassementTops();
+	
+}

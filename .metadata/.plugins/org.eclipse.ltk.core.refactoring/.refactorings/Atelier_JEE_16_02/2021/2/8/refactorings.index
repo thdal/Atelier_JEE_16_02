@@ -1,0 +1,23 @@
+1613974946946	Delete element
+1613975478481	Rename type 'ConnexinServlet'
+1613980346683	Rename type 'IdeeInnovante'
+1614041712998	Rename type 'Admin'
+1614041858337	Encapsulate field 'roleDescription'
+1614043981749	Delete element
+1614110436212	Delete element
+1614110462534	Rename type 'RolesServiceIml'
+1614118750591	Encapsulate field 'roleNumeric'
+1614190870256	Rename resource 'utilisateurs'
+1614242956476	Encapsulate field 'status'
+1614251211898	Encapsulate field 'vote'
+1614254756786	Rename type 'Note'
+1614254772869	Rename type 'NoteDao'
+1614254781511	Rename type 'NoteDaoImpl'
+1614254796499	Rename type 'NoteService'
+1614254804193	Rename type 'NoteServiceImpl'
+1614265308879	Rename package 'fr.epsi.router'
+1614314107073	Rename resource 'ListClassements'
+1614314146823	Delete element
+1614314377727	Rename resource 'classements'
+1614314391675	Rename resource 'ListClassements.jsp'
+1614355701141	Encapsulate field 'topPercentage'

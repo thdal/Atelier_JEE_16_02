@@ -1,0 +1,32 @@
+package fr.epsi.service;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction
+
+
+import fr.epsi.dao.UserRoleDao;
+import fr.epsi.dao.UserRoleDaoImpl;
+import fr.epsi.entite.UserRole;
+
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class UserRoleServiceImpl implements UserRoleService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Resource
+    private UserTransaction utx;
+	
+	public void createUserRole(UserRole ur) {		
+		UserRoleDao dao = new UserRoleDaoImpl(em, utx);
+		dao.create(ur);		
+	}
+
+
+}

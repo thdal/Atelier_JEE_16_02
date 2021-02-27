@@ -1,0 +1,20 @@
+1613467992627	Delete element
+1613468238254	Encapsulate field 'Image'
+1613468789214	Encapsulate field 'comment'
+1613469062555	Rename resource 'FormArticle.jsp'
+1613469074634	Rename resource 'ListArticles.jsp'
+1613469473170	Rename type 'ClientService'
+1613469496201	Rename type 'ClientServiceImpl'
+1613469739849	Rename resource 'ClientDao.java'
+1613469781519	Rename resource 'ClientDaoImpl.java'
+1613469924591	Rename resource 'ClientServlet.java'
+1613469939210	Rename resource 'USerServlet.java'
+1613470188093	Encapsulate field 'mail'
+1613470401090	Rename resource 'ArticleServlet.java'
+1613485185892	Rename resource 'pageHome.jsp'
+1613486625831	Delete element
+1613575332662	Copy file
+1613575468995	Move 'hellium.jpg' to 'pages'
+1613582254184	Rename resource 'hellium.jpg'
+1613583204535	Delete element
+1613584318486	Delete element

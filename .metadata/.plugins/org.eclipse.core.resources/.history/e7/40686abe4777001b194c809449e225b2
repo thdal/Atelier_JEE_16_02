@@ -1,0 +1,97 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Liste des utilisateurs</title>
+</head>
+<body>
+<div class="container">
+<%@include file="../commons/MenuNavBar.jsp" %>
+<h1>Liste des utilisateurs</h1>
+<hr> 										 
+<table>
+   <thead>
+       <tr>
+           <th>Numero</th>       
+           <th>Mail</th>
+           <th>Validé</th>  
+           <th>Statut</th>           
+           <th>Actions</th>           
+                    
+       </tr>
+   </thead>
+   <tbody> 
+    <c:forEach items="${UserList}" var="u" varStatus="loop">   
+	    <tr>
+	    	<td><c:out value="${loop.index}"/>
+	    	</td>
+	        <td><c:out value="${u.mail}"/></td>
+	        <td>
+	        <c:if test="${empty u.validated}">
+	        	Non
+	        </c:if>
+	        <c:if test="${u.validated}">
+	        	Oui
+	        </c:if>
+	        <c:if test="${u.validated == false}">
+	        	Non
+	        </c:if>	        
+	        </td> 
+	        <td>
+	        <c:if test="${empty u.status}">
+	        	Activé
+	        </c:if>
+	        <c:if test="${u.status}">
+	        	Activé
+	        </c:if>
+	        <c:if test="${u.status == false}">
+	        	Désactivé
+	        </c:if>	 			
+			 <!-- 
+				 <div class="input-field col s12">
+				    <select>
+				    	<option disabled selected> -- Statut -- </option>
+				      <option value="0">Activer</option>
+				      <option value="1">Désactiver</option>
+				    </select>
+				  </div> -->   
+	        </td>        
+	        <td>
+	        	<form  action="user?action=validate" method="post">	        
+					<c:if test="${u.status == false}">
+						<input type="hidden" name="valide" value=false/>					
+						<button style="cursor:pointer" class="btn waves-effect waves-light blue" type="submit" name="action">Désactiver</button>				
+					</c:if>				
+					<c:if test="${u.status}">
+						<input type="hidden" name="valide" value=true/>					
+						<button style="cursor:pointer" class="btn waves-effect waves-light blue" type="submit" name="action">Activer</button>				
+					</c:if>
+				</form>	
+				<form  action="user?action=validate" method="post">					
+					<c:if test="${u.validated == false}">
+						<button style="cursor:pointer" class="btn waves-effect waves-light orange" type="submit" name="action">Valider</button>				
+		       		</c:if>
+	       		</form>		       		
+	       		<form  action="user?action=delete" method="post">
+	       			<input type="hidden" name="userId" value="${u.id}"/>	       		
+	       			<button style="cursor:pointer" class="btn waves-effect waves-light red" type="submit" name="action">Supprimer</button>
+	       		</form>								
+	        </td>            
+	    </tr>
+	</c:forEach>	    
+    </tbody>
+ </table> 
+
+</div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+});
+</script>
+</html>

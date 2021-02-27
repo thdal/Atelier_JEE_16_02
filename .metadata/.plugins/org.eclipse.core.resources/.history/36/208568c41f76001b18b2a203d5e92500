@@ -1,0 +1,61 @@
+package fr.epsi.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
+import fr.epsi.dao.RolesDao;
+import fr.epsi.dao.RolesDaoImpl;
+import fr.epsi.dao.UserDao;
+import fr.epsi.dao.UserDaoImpl;
+import fr.epsi.entite.Roles;
+import fr.epsi.entite.User;
+
+
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class RolesServiceImpl implements RolesService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Resource
+    private UserTransaction utx;
+	
+	public void createRole(Roles r) {		
+		RolesDao dao = new RolesDaoImpl(em, utx);
+		dao.createRole(r);		
+	}
+
+	public String getRole(Long id) {
+		RolesDao dao=new RolesDaoImpl(em, utx);	
+		List<User> users = dao.getUser(mail, password);
+		Long user_id = null;
+		if(users == null) {
+			return null;
+		}
+		if(users.size() == 0) {
+			return null;
+		}
+		System.out.println("userSize");
+		System.out.println(users.size());
+
+
+		for(User u : users) {
+			System.out.println(u.getPassword());
+			System.out.println(u.getMail());
+			user_id = u.getId();
+
+		}
+		
+		return user_id;
+		return null;
+	}
+
+}

@@ -1,0 +1,103 @@
+package fr.epsi.dao;
+
+import fr.epsi.entite.Roles;
+import fr.epsi.entite.User;
+import fr.epsi.entite.UserRole;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
+
+
+/*
+ * 
+ * La classe d'implémentation DAO du client, qui me permettra d'accéder à la base de données.
+ */
+public class UserDaoImpl implements UserDao{
+	
+	EntityManager em;    
+	UserTransaction utx;
+	public UserDaoImpl(EntityManager em, UserTransaction utx) {
+		this.em=em;
+		this.utx=utx;
+	}
+
+	public void create(User u) {
+		
+			try {
+				utx.begin();
+				em.persist(u);
+				utx.commit();
+			} catch (NotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (HeuristicMixedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (HeuristicRollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+	}
+	
+	public List<User> getUsersList(){	    
+	    	List<User> users = em.createQuery("select u from User u order by u.mail asc", User.class).getResultList();	   
+		    return users;
+	}	
+	
+	public User getUser(String mail, String password) {		
+		User user = null;
+		 try {
+			 user = (User) em.createQuery(
+					   "SELECT u FROM User u WHERE u.mail = :mail")
+					   .setParameter("mail", mail)
+					   .getSingleResult();
+			  } catch (NoResultException e) {
+				  return user;
+			  }
+
+		return user;
+	}
+	
+	@Override
+	@Transactional
+	public void deleteUser(Long id) {	
+		
+			em.getTransaction().begin();
+            User user = em.find(User.class, id);
+            em.remove(user);
+            em.getTransaction().commit();
+            Query query = em.createNativeQuery("DELETE FROM USER WHERE id = " + id);
+            query.executeUpdate();
+            /*em.createQuery("delete from User ur WHERE ur.id = :mail ")
+				.setParameter("mail", id)
+			    .getResultList();  */ 
+
+	
+	}
+	
+	
+	
+
+}

@@ -1,0 +1,75 @@
+package fr.epsi.router;
+
+import java.io.IOException;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.epsi.entite.Roles;
+import fr.epsi.entite.User;
+import fr.epsi.entite.UserRole;
+import fr.epsi.service.RolesService;
+import fr.epsi.service.UserRoleService;
+import fr.epsi.service.UserService;
+
+@WebServlet("/")
+public class HomeServlet extends HttpServlet{
+	
+	@EJB
+	private UserService userService;
+	
+	@EJB
+	private RolesService rolesService;	
+	
+	@EJB
+	private UserRoleService userRoleService;	
+	
+	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    {		 				 
+		 		HttpSession session = req.getSession();		    
+			    //On crée un compte administrateur (pour notre version dev)		 		
+		 		if(! userService.getUserExist("root", "root")) {
+		 			 User u=new User();
+						u.setMail("root");
+						u.setPassword("root");
+						userService.createUser(u);	
+						Long user_id = u.getId();				
+						//On crée un role				
+						Roles r =new Roles();
+						r.setRoleDescription("Admin");
+						r.setRoleNumeric(1);
+						rolesService.createRole(r);
+						Long role_id = r.getId();
+						//On crée une association Role-User
+						UserRole ur =new UserRole();
+						ur.setRolesId(role_id);
+						ur.setUserId(user_id);
+						userRoleService.createUserRole(ur);	
+		 		}
+			   
+				int role = rolesService.getRole(userRoleService.getRoleId(userService.getUserId("root", "root")));				
+				if(role == 1) {
+				    session.setAttribute("Admin", true);
+				}				
+				
+				if(session.getAttribute("connected") != null) {
+					 if((Boolean)session.getAttribute("connected")) 
+					 {
+						 this.getServletContext().getRequestDispatcher("/WEB-INF/pages/PageHome.jsp").forward(req, resp); 
+					 }else {
+						 this.getServletContext().getRequestDispatcher("/WEB-INF/pages/connexion/FormConnexion.jsp").forward(req, resp);
+					 }
+				 }
+				 else 
+				 {
+					 this.getServletContext().getRequestDispatcher("/WEB-INF/pages/connexion/FormConnexion.jsp").forward(req, resp);
+				 }
+			}
+
+}

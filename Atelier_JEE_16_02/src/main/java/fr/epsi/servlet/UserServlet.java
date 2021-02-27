@@ -1,0 +1,83 @@
+package fr.epsi.servlet;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import fr.epsi.entite.User;
+import fr.epsi.service.RolesService;
+import fr.epsi.service.UserService;
+
+@WebServlet("/user")
+public class UserServlet extends HttpServlet{
+	
+	@EJB
+	private UserService userService;
+	
+	@EJB
+	private RolesService rolesService;	
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    { 
+				 if(req.getParameter("action") != null){
+		
+				 		if(req.getParameter("action").equals("list")) {
+				 			req.setAttribute("UserList", this.getUserList());
+					 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/ListUser.jsp").forward(req, resp);
+				 		}
+				 }
+		    }
+
+	 	
+	 protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    {
+				 if(req.getParameter("action") != null){
+						 if(req.getParameter("action").equals("delete")) 
+						 {
+							 	Long id = Long.parseLong(req.getParameter("userId"));
+							 	userService.delete(id);
+					 			req.setAttribute("UserList", userService.getUsersList());
+						 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/ListUser.jsp").forward(req, resp);
+					 	  }
+						 if(req.getParameter("action").equals("setStatus"))
+						 {
+							 	Long id = Long.parseLong(req.getParameter("userId"));
+							 	Boolean status = Boolean.valueOf(req.getParameter("status"));
+							 	userService.setStatus(id, status);
+					 			req.setAttribute("UserList", userService.getUsersList());
+						 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/ListUser.jsp").forward(req, resp);
+					 	 }
+						 if(req.getParameter("action").equals("validate"))
+						 {
+							 	Long id = Long.parseLong(req.getParameter("userId"));
+							 	userService.setValidated(id);
+					 			req.setAttribute("UserList", userService.getUsersList());
+						 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/ListUser.jsp").forward(req, resp);
+					 	 }
+				 }
+		    }
+	 
+	 public List<User> getUserList() {			 
+			 List<User> users=new ArrayList<User>();		
+		 	 users = userService.getUsersList();		
+			 return users;			
+		}
+	 
+	 public void create(String mail, String password) {
+			User u=new User();
+			u.setMail(mail);
+			u.setPassword(password);	
+			u.setValidated(false);
+			u.setStatus(true);
+			userService.createUser(u);		
+		}
+}
+ 

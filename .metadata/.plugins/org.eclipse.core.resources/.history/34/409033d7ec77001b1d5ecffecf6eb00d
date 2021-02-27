@@ -1,0 +1,41 @@
+package fr.epsi.servlet;
+
+import java.io.IOException;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import fr.epsi.service.IdeeService;
+import fr.epsi.service.UserService;
+import fr.epsi.service.VoteService;
+
+@WebServlet("/classements")
+public class ClassementServlet {
+	
+	@EJB
+	private IdeeService ideeService;
+	
+	@EJB
+	private VoteService voteService;
+	
+	@EJB
+	private UserService userService;
+	
+	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    {
+		 		if(req.getParameter("action").equals("list")) {
+		 			Object objSessionId = req.getSession().getAttribute("SessionID");
+					 long sessionId =  Long.parseLong( String.valueOf(objSessionId));
+		 			req.setAttribute("IdeesList", this.getIdeesList(sessionId));		
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/IdeeInnovante/ListIdee.jsp").forward(req, resp);
+		 		}else if(req.getParameter("action").equals("create")) {
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/IdeeInnovante/FormIdee.jsp").forward(req, resp);
+		 		}
+		 		
+		    }
+
+}

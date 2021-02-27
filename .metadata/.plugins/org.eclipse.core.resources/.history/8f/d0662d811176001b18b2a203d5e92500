@@ -1,0 +1,14 @@
+package fr.epsi.dao;
+
+import java.util.List;
+
+import fr.epsi.entite.Roles;
+
+public interface RolesDao {
+    void create(Roles r); 
+    
+    void createAdmin(Roles r);
+    
+   List<Roles> getRole();
+
+}

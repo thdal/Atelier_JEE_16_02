@@ -1,0 +1,16 @@
+package fr.epsi.service;
+
+import java.util.List;
+
+import fr.epsi.entite.Idee;
+
+public interface IdeeService {
+	
+	void createIdee(Idee i);
+	
+	List<Idee> getIdeesList();
+	
+	   void setVote(Long id, int vote);
+
+
+}

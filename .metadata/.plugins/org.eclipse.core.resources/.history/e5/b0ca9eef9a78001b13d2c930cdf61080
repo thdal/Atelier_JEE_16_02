@@ -1,0 +1,23 @@
+package fr.epsi.dao;
+
+import java.util.List;
+
+import fr.epsi.entite.Idee;
+import fr.epsi.entite.Roles;
+import fr.epsi.entite.Vote;
+
+public interface IdeeDao {
+    void create(Idee i); 
+    
+   List<Idee> getIdeesList();
+   
+   List<Idee> getIdeesListSortByPercent();   
+   
+   Idee getIdee(Long id);
+   
+   void setVote(Vote vote, long id);
+   
+   void setPercent(int percent, long id);
+
+
+}

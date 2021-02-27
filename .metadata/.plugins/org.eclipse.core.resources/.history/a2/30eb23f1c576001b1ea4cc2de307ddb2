@@ -1,0 +1,86 @@
+package fr.epsi.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
+import fr.epsi.dao.UserDao;
+import fr.epsi.dao.UserDaoImpl;
+import fr.epsi.entite.User;
+
+
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class UserServiceImpl implements UserService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Resource
+    private UserTransaction utx;
+	
+	public void createUser(User c) {		
+		UserDao dao=new UserDaoImpl(em, utx);
+		dao.create(c);		
+	}
+	
+	public List<User> getUsersList() {
+		UserDao dao=new UserDaoImpl(em, utx);		
+		return dao.getUsersList();		
+	}
+
+	public Boolean getUserExist(String mail, String password) {
+
+		UserDao dao=new UserDaoImpl(em, utx);	
+		List<User> exist = dao.getUser1(mail, password);
+		if(exist == null) {
+			return false;
+		}
+		if(exist.size() == 0) {
+			return false;
+		}
+		System.out.println("userSize");
+		System.out.println(exist.size());
+
+
+		for(User u : exist) {
+			System.out.println(u.getPassword());
+			System.out.println(u.getMail());
+
+		}
+		
+		return true;
+	}
+	
+	public Long getUserId(String mail, String password) {
+
+		UserDao dao=new UserDaoImpl(em, utx);	
+		List<User> users = dao.getUser(mail, password);
+		Long user_id = null;
+		if(users == null) {
+			return null;
+		}
+		if(users.size() == 0) {
+			return null;
+		}
+		System.out.println("userSize");
+		System.out.println(users.size());
+
+
+		for(User u : users) {
+			System.out.println(u.getPassword());
+			System.out.println(u.getMail());
+			user_id = u.getId();
+
+		}
+		
+		return user_id;
+	}
+
+}

@@ -1,0 +1,17 @@
+package fr.epsi.dao;
+
+import java.util.List;
+
+import fr.epsi.entite.User;
+
+public interface UserDao {
+    void create(User u); 
+    
+   List<User> getUsersList();
+   
+   List<User> getUserIsAdmin();
+   
+   List<User> getUserExist(String mail, String password);
+
+
+}

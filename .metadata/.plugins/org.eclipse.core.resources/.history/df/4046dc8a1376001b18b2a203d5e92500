@@ -1,0 +1,30 @@
+package fr.epsi.service;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.management.relation.Role;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
+import fr.epsi.dao.RolesDao;
+
+
+@Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
+public class RolesServiceImpl implements NoteService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Resource
+    private UserTransaction utx;
+	
+	public void createRole(Role r) {		
+		RolesDao dao=new RolesDaoImpl(em, utx);
+		dao.createRole(r);		
+	}
+
+}

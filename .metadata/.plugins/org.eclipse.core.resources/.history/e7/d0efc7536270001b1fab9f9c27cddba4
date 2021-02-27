@@ -1,0 +1,64 @@
+package fr.epsi.router;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import fr.epsi.entite.IdeeInnovante;
+import fr.epsi.service.IdeeService;
+
+
+@WebServlet("/idees")
+public class IdeeServlet extends HttpServlet{
+	
+	@EJB
+	private IdeeService service;
+	
+	 protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    {
+		 		if(req.getParameter("action").equals("list")) {
+		 			req.setAttribute("IdeesList", this.getIdeesList());		
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/Article/ListArticles.jsp").forward(req, resp);
+		 		}else if(req.getParameter("action").equals("create")) {
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/Article/FormIdee.jsp").forward(req, resp);
+		 		}
+		    }
+		 	
+		 protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			        throws ServletException, IOException
+			    {
+			   		//controller.create(req.getParameter("nomClient"), req.getParameter("adresseClient"));					
+					this.create(req.getParameter("categorieIdee"), req.getParameter("descriptionIdee"), req.getParameter("imgIdee"));	
+		 			req.setAttribute("IdeesList", this.getIdeesList());		
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/Article/ListIdees.jsp").forward(req, resp);
+			    }
+		 
+		 public List<IdeeInnovante> getIdeesList() {	
+			 	//Init de la liste pour la première utilisation,
+			 	// nous pourrons ajouter nos articles avec le formulaire par la suite.
+				 if(service.getIdeesList().isEmpty()){
+				 	this.create("Fun", "Souffler dans un ballon", "/../#"); 
+				 	this.create("Serieuse", "Résoudre une formule mathématique", "/../#"); 
+				 }
+			 	List<IdeeInnovante> articles=new ArrayList<IdeeInnovante>();		
+			 	articles = service.getIdeesList();		
+				return articles;			
+			}
+		 
+		 public void create(String categorie, String description, String Image) {
+			 	IdeeInnovante i=new IdeeInnovante();
+				i.setCategorie(categorie);
+				i.setDescription(description);	
+				i.setImage(Image);
+				service.createIdee(i);		
+			}
+
+		
+}

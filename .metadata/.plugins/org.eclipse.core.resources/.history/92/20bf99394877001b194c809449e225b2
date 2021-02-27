@@ -1,0 +1,25 @@
+package fr.epsi.dao;
+
+import java.util.List;
+
+import fr.epsi.entite.User;
+
+public interface UserDao {
+    void create(User u); 
+    
+   List<User> getUsersList(); 
+  
+   
+   User getUser(String mail, String password);
+   
+   void delete(Long id);
+   
+   void setStatus(Long id);
+   
+   void setValidateds(Long id);
+
+
+
+
+
+}

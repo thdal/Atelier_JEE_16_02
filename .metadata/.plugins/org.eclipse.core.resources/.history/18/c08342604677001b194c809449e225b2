@@ -1,0 +1,76 @@
+package fr.epsi.router;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import fr.epsi.entite.User;
+import fr.epsi.service.RolesService;
+import fr.epsi.service.UserService;
+
+@WebServlet("/user")
+public class UserServlet extends HttpServlet{
+	
+	@EJB
+	private UserService userService;
+	
+	@EJB
+	private RolesService rolesService;	
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    { 
+		 		if(req.getParameter("action").equals("list")) {
+		 			req.setAttribute("UserList", this.getUserList());
+		 			//req.setAttribute("ClientsList", this.getClientsList());		 			
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/ListUser.jsp").forward(req, resp);
+		 		}else if(req.getParameter("action").equals("create")) {
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/Client/FormClient.jsp").forward(req, resp);		 		
+			    }
+		    }
+
+	 	
+	 protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+		        throws ServletException, IOException
+		    {
+			 if(req.getParameter("action").equals("delete")) {
+				 	Long id = Long.parseLong(req.getParameter("userId"));
+				 	System.out.println("ServletDeleteid");
+					System.out.println(req.getParameter("userId"));
+
+					System.out.println(id);
+				 	userService.deleteUser(id);
+		 			req.setAttribute("UserList", userService.getUsersList());
+			 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/ListUser.jsp").forward(req, resp);
+		 		}
+		    }
+	 
+	 public List<User> getUserList() {	
+		 //Faux users
+		 if (userService.getUsersList().size() < 3) {
+			 	this.create("Dupont@", "5466000an"); 
+			 	this.create("Alan@", "590irac"); 
+			 	this.create("Jonathan@", "6aragnol"); 
+		 }
+			 	
+			 
+		 	List<User> users=new ArrayList<User>();		
+		 	users = userService.getUsersList();		
+			return users;			
+		}
+	 
+	 public void create(String mail, String password) {
+			User u=new User();
+			u.setMail(mail);
+			u.setPassword(password);	
+			u.setValidated(false);
+			userService.createUser(u);		
+		}
+}
+ 

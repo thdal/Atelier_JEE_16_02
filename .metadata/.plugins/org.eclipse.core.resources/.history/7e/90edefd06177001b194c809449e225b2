@@ -1,0 +1,10 @@
+package fr.epsi.service;
+
+import fr.epsi.entite.Idee;
+import fr.epsi.entite.Note;
+
+public interface NoteService {
+	
+	void createNote(Note n);
+	
+}
