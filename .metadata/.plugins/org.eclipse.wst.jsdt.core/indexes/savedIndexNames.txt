@@ -1,11 +1,7 @@
 INDEX VERSION 1.4+C:\Users\thdal\Documents\EPSI_COURS\COURS_PHELLIPOT\Atelier_JEE_16_02_DALENS\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2671363538.index
-2084107679.index
 561449334.index
 1333978080.index
+2084107679.index
 666532788.index
-947591360.index
-1274379655.index
-947591360.index
 3329642106.index
 3147593290.index

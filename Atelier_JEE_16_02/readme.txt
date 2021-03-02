@@ -1,1 +1,0 @@
-On ne peut pas créer de comptes admin depuis la page de registration seulement des comptes utilisateurs, les comptes admin sont créer depuis le backend
